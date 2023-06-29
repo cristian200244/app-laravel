@@ -1,43 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Document</title>
 </head>
 
 <body>
-    < div class="container">
-        <p>hola desde blade usuarios</p>
-
+    <div class="container">
+        <h1>Listado De Personas En Deserccción</h1>
+        <a class="btn btn-success mt-3" href="{{ route('usuarios.create') }} "> Crear Usuarios</a>
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         <table class="table">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Primer Nombre</th>
-                <th scope="col">Segundo Nombre</th>
-                <th scope="col">Primer Apellido</th>
-                <th scope="col">Segundo Apellido</th>
-                <th scope="col">Handle</th>
-              </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Primer Nombre</th>
+                    <th scope="col">Segundo Nombre</th>
+                    <th scope="col">Primer Apellido</th>
+                    <th scope="col">Segundo Apellido</th>
+                    <th scope="col">correo</th>
+                    <th scope="col">Options</th>
+                </tr>
             </thead>
             <tbody>
-              <tr>
-                <td scope="row">{{$user->id}}</td>
-                <td>{{$user->PrimerNombre}}</td>
-                <td>{{$user->SegundoNombre}}</td>
-                <td>{{$user->PrimerApellido}}</td>
-                <td>{{$user->SegundoApellido}}</td>
-                <td>{{$user->email}}</td>
-              </tr>
-            </tbody>
-          </table>
-    </>
+                @foreach ($users as $user)
+                    <tr>
+                        <td scope="row">{{ $user->id }}</td>
+                        <td>{{ $user->primer_nombre }}</td>
+                        <td>{{ $user->segundo_nombre }}</td>
+                        <td>{{ $user->primer_apellido }}</td>
+                        <td>{{ $user->segundo_apellido }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>
+                            <form action="{{ route('usuarios.destroy', $user->id) }}" method="Post">
+                                <a class="btn btn-primary" href="{{ route('usuarios.edit', $user->id) }}">Edit</a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        {{ $users->render() }}
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    </div>
 </body>
 
 </html>

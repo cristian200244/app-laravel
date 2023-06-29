@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
- 
+
 Route::get('/perfil', function () {
     return view('perfil');
 });
-route::get('/usuario', function(){
+route::get('/usuario', function () {
     return view('partials.usuario');
 });
 
-Route::resource('usuarios',UserController::class);
+Route::resource('usuarios', UserController::class);

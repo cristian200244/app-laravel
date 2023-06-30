@@ -67,7 +67,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+       //
     }
 
     /**
@@ -78,7 +78,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -90,7 +91,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'primer_nombre'     => 'required|max:50',
+            'segundo_nombre'    => 'required|max:50',
+            'primer_apellido'   => 'required|max:50',
+            'segundo_apellido'  => 'required|max:50',
+            
+           
+        ]);
+
+        $users = User::find($id);
+        $users->primer_nombre       = $request->primer_nombre;
+        $users->segundo_nombre      = $request->segundo_nombre;
+        $users->primer_apellido     = $request->primer_apellido;
+        $users->segundo_apellido    = $request->segundo_apellido;
+         
+        $users->save();
+        return redirect()->route('usuarios.index')->with('success', 'Company Has Been updated successfully');
     }
 
     /**
@@ -103,6 +120,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete($id);
-        return redirect()->route('usuarios.index')->with('success','elimninado con exito');
+        return redirect()->route('usuarios.index')->with('success', 'elimninado con exito');
     }
 }

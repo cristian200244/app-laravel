@@ -13,12 +13,12 @@
 <body>
     <div class="container">
         <h1>Listado De Personas En Deserccción</h1>
-        <a class="btn btn-success mt-3" href="{{ route('usuarios.create') }} "> Crear Usuarios</a>
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
                 <p>{{ $message }}</p>
             </div>
         @endif
+        <a class="btn btn-outline-success mb-3" href="{{ route('usuarios.create') }} "> Crear Usuarios</a>
         <table class="table">
             <thead>
                 <tr>
@@ -42,10 +42,11 @@
                         <td>{{ $user->email }}</td>
                         <td>
                             <form action="{{ route('usuarios.destroy', $user->id) }}" method="Post">
-                                <a class="btn btn-primary" href="{{ route('usuarios.edit', $user->id) }}">Edit</a>
+                                <a class="btn btn-outline-primary"
+                                    href="{{ route('usuarios.edit', $user->id) }}">Edit</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
                             </form>
 
                         </td>
